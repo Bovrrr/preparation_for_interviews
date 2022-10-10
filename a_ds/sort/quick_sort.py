@@ -1,16 +1,20 @@
 import random
 
 
+# считываю массив
 array = list(map(float, input().split()))
 
 
 def get_pivot(arr, l, r):
+    # беру медиану 3х рандомных элементов
     idxs = [random.randint(l, r) for _ in range(3)]
     a = [arr[i] for i in idxs]
     return sum(a) - (max(a) + min(a))
 
 
 def split(arr, l, r, x):
+    # переставляет элементы относительно опорного
+    # возвращает середины подмассива для следующего разбиения
     i, j = l, r
     while i <= j:
         while arr[i] < x:
