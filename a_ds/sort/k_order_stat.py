@@ -1,15 +1,14 @@
 import random
 
 
-# считываю массив
-array = list(map(float, input().split()))
+k = int(input())
+array = list(
+    map(
+        float,
+        input().split(),
+    )
+)
 
-
-def get_pivot(arr, l, r):
-    # беру медиану 3х рандомных элементов
-    idxs = [random.randint(l, r) for _ in range(3)]
-    a = [arr[i] for i in idxs]
-    return sum(a) - (max(a) + min(a))
 
 def get_pivot_random(arr, l, r):
     idx = random.randint(l, r)
@@ -32,16 +31,18 @@ def split(arr, l, r, x):
     return i, j
 
 
-def quick_sort(arr, l, r):
-    if r - l <= 1:
-        return
-    x = get_pivot(arr, l, r)
+def find_k_order_stat(arr, l, r, k):
+    if r <= l:
+        return arr[k]
+
+    x = get_pivot_random(arr, l, r)
     m2, m1 = split(arr, l, r, x)
 
-    quick_sort(arr, l, m1)
-    quick_sort(arr, m2, r)
+    if k < m2:
+        return find_k_order_stat(arr, l, m1, k)
+    else:
+        return find_k_order_stat(arr, m2, r, k)
 
 
-
-quick_sort(array, 0, len(array) - 1)
-print(array)
+x = find_k_order_stat(array, 0, len(array) - 1, k)
+print(x)
