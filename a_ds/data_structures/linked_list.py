@@ -33,8 +33,17 @@ class LinkedList:
         if i < 0 or self.size < i - 1:
             print(f"i={i} is out of bound. size is {self.size}")
         else:
-            # если i во второй половине списка, то от тейла идём
-            # если в 1-й, то от начала
-            # хотя на асимптотику это не влияет. можно и забить
-            pass
+            j = 0
+            curr_node = self.head
+            new_node = Node(value=x)
+            while j != i - 1:
+                curr_node = curr_node.next
+                j += 1
 
+            new_node.prev = curr_node
+            new_node.next = curr_node
+
+            curr_node.next.prev = new_node
+            curr_node.next = new_node
+
+            self.size += 1
